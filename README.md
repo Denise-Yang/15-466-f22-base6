@@ -1,10 +1,10 @@
-# (TODO: your game's title)
+# Po(n)ggers
 
-Author: (TODO: your name)
+Author: Denise Yang
 
-Design: (TODO: In two sentences or fewer, describe what is new and interesting about your game.)
+Design: Multiplayer pong. Ever want to play pong with more than just two people?? Here's your chance!
 
-Networking: (TODO: How does your game implement client/server multiplayer? What messages are transmitted? Where in the code?)
+Networking: My game builds ontop of the base code by adding the ball position, ball velocity, and player id to the send buffers in send_state_message and will read those values in recv_state_message.
 
 Screen Shot:
 
@@ -12,9 +12,9 @@ Screen Shot:
 
 How To Play:
 
-(TODO: describe the controls and (if needed) goals/strategy.)
+Use AD to move either left and right or up and down respectively. Don't let the ball hit the wall or else you're done! 
 
-Sources: (TODO: list a source URL for any assets you did not create yourself. Make sure you have a license for the asset.)
+Sources: 
 
 This game was built with [NEST](NEST.md).
 
