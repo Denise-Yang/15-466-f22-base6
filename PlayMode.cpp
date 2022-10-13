@@ -151,32 +151,48 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 		lines.draw(glm::vec3(Game::ArenaMin.x, Game::ArenaMax.y, 0.0f), glm::vec3(Game::ArenaMax.x, Game::ArenaMax.y, 0.0f), glm::u8vec4(0xff, 0x00, 0xff, 0xff));
 		lines.draw(glm::vec3(Game::ArenaMin.x, Game::ArenaMin.y, 0.0f), glm::vec3(Game::ArenaMin.x, Game::ArenaMax.y, 0.0f), glm::u8vec4(0xff, 0x00, 0xff, 0xff));
 		lines.draw(glm::vec3(Game::ArenaMax.x, Game::ArenaMin.y, 0.0f), glm::vec3(Game::ArenaMax.x, Game::ArenaMax.y, 0.0f), glm::u8vec4(0xff, 0x00, 0xff, 0xff));
-
+		
+	
 		for (auto const &player : game.players) {
 			glm::u8vec4 col = glm::u8vec4(player.color.x*255, player.color.y*255, player.color.z*255, 0xff);
 			if (&player == &game.players.front()) {
 				//mark current player (which server sends first):
 				lines.draw(
-					glm::vec3(player.position + Game::PlayerRadius * glm::vec2(-0.5f,-0.5f), 0.0f),
-					glm::vec3(player.position + Game::PlayerRadius * glm::vec2( 0.5f, 0.5f), 0.0f),
+					glm::vec3(player.position + Game::PlayerRadius/2 * glm::vec2(-0.5f,-0.5f), 0.0f),
+					glm::vec3(player.position + Game::PlayerRadius/2 * glm::vec2( 0.5f, 0.5f), 0.0f),
 					col
 				);
 				lines.draw(
-					glm::vec3(player.position + Game::PlayerRadius * glm::vec2(-0.5f, 0.5f), 0.0f),
-					glm::vec3(player.position + Game::PlayerRadius * glm::vec2( 0.5f,-0.5f), 0.0f),
+					glm::vec3(player.position + Game::PlayerRadius/2 * glm::vec2(-0.5f, 0.5f), 0.0f),
+					glm::vec3(player.position + Game::PlayerRadius/2 * glm::vec2( 0.5f,-0.5f), 0.0f),
 					col
 				);
+
 			}
-			for (uint32_t a = 0; a < circle.size(); ++a) {
+			if (player.id < 2){
 				lines.draw(
-					glm::vec3(player.position + Game::PlayerRadius * circle[a], 0.0f),
-					glm::vec3(player.position + Game::PlayerRadius * circle[(a+1)%circle.size()], 0.0f),
-					col
-				);
+					glm::vec3(player.position + 4*Game::PlayerRadius * glm::vec2(0.f,-1.f), 0.0f),
+					glm::vec3(player.position + 4*Game::PlayerRadius * glm::vec2( 0.f, 1.f), 0.0f),
+					col);
+				
+			}else{
+				lines.draw(
+					glm::vec3(player.position + 4*Game::PlayerRadius * glm::vec2(-1.f,0.f), 0.0f),
+					glm::vec3(player.position + 4*Game::PlayerRadius * glm::vec2( 1.f, 0.f), 0.0f),
+					col);
+			
 			}
 
 			draw_text(player.position + glm::vec2(0.0f, -0.1f + Game::PlayerRadius), player.name, 0.09f);
 		}
+		for (uint32_t a = 0; a < circle.size(); ++a){
+			lines.draw(
+				glm::vec3(game.ball.position + Game::PlayerRadius/2 * circle[a], 0.0f),
+				glm::vec3(game.ball.position +  Game::PlayerRadius/2 * circle[(a+1)%circle.size()], 0.0f),
+				glm::u8vec4(255, 255, 255, 0xff)
+			);
+		}
+
 	}
 	GL_ERRORS();
 }
